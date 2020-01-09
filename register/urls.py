@@ -12,4 +12,6 @@ urlpatterns = [
          name='user_create_done'),
     path('user_create/complete/<token>/',
          views.UserCreateComplete.as_view(), name='user_create_complete'),
+    path('user_detail/<int:pk>/', views.UserDetail.as_view(), name='user_detail'),
+    path('user_update/<int:pk>/', views.UserUpdate.as_view(), name='user_update'),
 ]

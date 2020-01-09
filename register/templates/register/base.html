@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
-    <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
@@ -19,7 +16,6 @@
     <title>会員登録サンプル</title>
   </head>
   <body>
-    <!-- ナビバー -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="{% url 'register:top' %}">ホームページ名</a>
       <button
@@ -38,6 +34,20 @@
         <ul class="navbar-nav mr-auto">
           {% if user.is_authenticated %}
           <li>
+            <a
+              class="nav-item nav-link"
+              href="{% url 'register:user_detail' user.pk %}"
+              >ユーザー情報閲覧</a
+            >
+          </li>
+          <li>
+            <a
+              class="nav-item nav-link"
+              href="{% url 'register:user_update' user.pk %}"
+              >ユーザー情報更新</a
+            >
+          </li>
+          <li>
             <a class="nav-item nav-link" href="{% url 'register:logout' %}"
               >ログアウト</a
             >
@@ -53,13 +63,10 @@
       </div>
     </nav>
 
-    <!-- メインコンテント -->
     <div class="container mt-3">
       {% block content %}{% endblock %}
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
