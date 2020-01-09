@@ -2,8 +2,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import (
-    LoginView, LogoutView
+    LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView,
+    PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView,
+    PasswordResetCompleteView
 )
+from django.urls import reverse_lazy
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.signing import BadSignature, SignatureExpired, loads, dumps
 from django.http import HttpResponseBadRequest
@@ -11,7 +14,8 @@ from django.shortcuts import redirect, resolve_url
 from django.template.loader import render_to_string
 from django.views import generic
 from .forms import (
-    LoginForm, UserCreateForm, UserUpdateForm
+    LoginForm, UserCreateForm, UserUpdateForm, MyPasswordChangeForm,
+    MyPasswordResetForm, MySetPasswordForm
 )
 
 User = get_user_model()
@@ -31,12 +35,10 @@ class Logout(LoginRequiredMixin, LogoutView):
 
 
 class UserCreate(generic.CreateView):
-    """ユーザー仮登録"""
     template_name = 'register/user_create.html'
     form_class = UserCreateForm
 
     def form_valid(self, form):
-        """仮登録と本登録用メールの発行"""
         user = form.save(commit=False)
         user.is_active = False
         user.save()
@@ -112,3 +114,35 @@ class UserUpdate(OnlyYouMixin, generic.UpdateView):
 
     def get_success_url(self):
         return resolve_url('register:user_detail', pk=self.kwargs['pk'])
+
+
+class PasswordChange(PasswordChangeView):
+    form_class = MyPasswordChangeForm
+    success_url = reverse_lazy('register:password_change_done')
+    template_name = 'register/password_change.html'
+
+
+class PasswordChangeDone(PasswordChangeDoneView):
+    template_name = 'register/password_change_done.html'
+
+
+class PasswordReset(PasswordResetView):
+    subject_template_name = 'register/mail_template/password_reset/subject.txt'
+    email_template_name = 'register/mail_template/password_reset/message.txt'
+    template_name = 'register/password_reset_form.html'
+    form_class = MyPasswordResetForm
+    success_url = reverse_lazy('register:password_reset_done')
+
+
+class PasswordResetDone(PasswordResetDoneView):
+    template_name = 'register/password_reset_done.html'
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    form_class = MySetPasswordForm
+    success_url = reverse_lazy('register:password_reset_complete')
+    template_name = 'register/password_reset_confirm.html'
+
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    template_name = 'register/password_reset_complete.html'
