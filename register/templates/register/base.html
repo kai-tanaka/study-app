@@ -12,12 +12,16 @@
       integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
       crossorigin="anonymous"
     />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"
+    ></script>
 
-    <title>会員登録サンプル</title>
+    <title>学習管理サイト</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'register:top' %}">ホームページ名</a>
+      <a class="navbar-brand" href="{% url 'register:top' %}">学習管理サイト</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -69,7 +73,7 @@
           {% else %}
           <li class="nav-item">
             <a class="nav-item nav-link" href="{% url 'register:login' %}">
-              ようこそ、ゲスト！ログインはこちら
+              ログインはこちら
             </a>
           </li>
           {% endif %}
