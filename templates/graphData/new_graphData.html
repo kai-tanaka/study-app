@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %}
+<h2>学習データ</h2>
+<form action="{% url 'graphData:new_graphData' %}" method="POST">
+  {% csrf_token %} {{ form.title }}<br />勉強タイトル<br />
+  {{ form.category }}<br />学習した勉強のカテゴリ<br />
+  {{ form.studyDay }}<br />学習日<br />
+  {{ form.details }}<br />勉強の詳細<br />
+  {{ form.studyTime }}時間<br />学習時間<br />
+  <button>保存</button>
+</form>
+<a href="{% url 'graphData:index' %}">戻る</a>
+{% endblock %}

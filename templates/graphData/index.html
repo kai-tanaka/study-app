@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+<h2>カテゴリー</h2>
+<ul>
+  <a href="{% url 'graphData:index' %}">
+    <li>トップ</li>
+  </a>
+
+  {% for category in category_list %}
+  <a href="{% url 'graphData:graphData_category' category %}">
+    <li>{{ category }}</li>
+  </a>
+  {% endfor %}
+</ul>
+<a href="{% url 'graphData:new_category' %}">カテゴリーを追加する</a>
+<h2>学習データ</h2>
+{% if category %}
+<h2>カテゴリー: {{ category.title }}</h2>
+{% endif %} {% for graphDatas in graphData %}
+<ul>
+  <li>
+    <h4>{{ graphDatas.title }}</h4>
+    <h4>{{ graphDatas.studyTime }}時間</h4>
+    <p>{{ graphDatas.details }}</p>
+    <p>{{ graphDatas.studyDay }}</p>
+  </li>
+  <form method="POST" action="{% url 'graphData:delete' graphDatas.pk %}">
+    {% csrf_token %}
+    <button type="submit">削除</button>
+  </form>
+</ul>
+{% endfor %}
+<a href="{% url 'graphData:new_graphData' %}">学習データを追加する</a>
+{% endblock %}
