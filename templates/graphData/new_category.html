@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<h2>カテゴリー</h2>
+<a href="{% url 'graphData:index' %}">戻る</a>
+<form action="{% url 'graphData:new_category' %}" method="POST">
+  {% csrf_token %}
+  {{ form.title }}
+  <button>保存</button>
+</form>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block content %}
+<p>ここに、好きな内容を入れる。</p>
+<canvas id="canvas"></canvas>
+
+<script>
+  var ctx = document.getElementById("canvas").getContext("2d");
+  var myBar = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["A", "B", "C", "D", "E"], //ラベルをDjangoのTODO登録から設定したい日にちにする予定
+      datasets: [
+        {
+          data: [5, 20, 11, 2, 30], //数字をDjangoのTODO登録から設定したい学習時間にする予定
+          backgroundColor: [
+            //DjangoのTODO登録から設定したいグラフの色を変更する
+            "#FF4444",
+            "#4444FF",
+            "#44BB44",
+            "#FFFF44",
+            "#FF44FF"
+          ]
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        fontSize: 18,
+        text: "〇〇月の学習時間"
+      },
+      scales: {
+        yAxes: [
+          {
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: "学習時間",
+              fontSize: 18
+            },
+            ticks: {
+              min: 0,
+              max: 30,
+              fontSize: 18,
+              stepSize: 5
+            }
+          }
+        ],
+        xAxes: [
+          {
+            display: true,
+            barPercentage: 0.4,
+            categoryPercentage: 0.4,
+            scaleLabel: {
+              display: true,
+              labelString: "日にち",
+              fontSize: 18
+            },
+            ticks: {
+              fontSize: 18
+            }
+          }
+        ]
+      },
+      layout: {
+        padding: {
+          left: 100,
+          right: 50,
+          top: 0,
+          bottom: 0
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}
