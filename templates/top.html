@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block content %}
-<p>ここに、好きな内容を入れる。</p>
+{% extends "base.html" %} {% block content %} 
+{% if request.user.is_authenticated %}
+
 <canvas id="canvas"></canvas>
 
 <script>
@@ -7,18 +8,22 @@
   var myBar = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["A", "B", "C", "D", "E"], //ラベルをDjangoのTODO登録から設定したい日にちにする予定
+      labels: [{% for data in datas %}
+        "{{ data.studyDay }}",
+        {% endfor %}], //ラベルをDjangoのTODO登録から設定したい日にちにする予定
       datasets: [
         {
-          data: [5, 20, 11, 2, 30], //数字をDjangoのTODO登録から設定したい学習時間にする予定
-          backgroundColor: [
-            //DjangoのTODO登録から設定したいグラフの色を変更する
-            "#FF4444",
-            "#4444FF",
-            "#44BB44",
-            "#FFFF44",
-            "#FF44FF"
-          ]
+          data: [{% for data in datas %}
+            {{ data.studyTime }},
+            {% endfor %}] //数字をDjangoのTODO登録から設定したい学習時間にする予定
+          // backgroundColor: [
+          //   //DjangoのTODO登録から設定したいグラフの色を変更する
+          //   "#FF4444",
+          //   "#4444FF",
+          //   "#44BB44",
+          //   "#FFFF44",
+          //   "#FF44FF"
+          // ]
         }
       ]
     },
@@ -43,7 +48,7 @@
             },
             ticks: {
               min: 0,
-              max: 30,
+              max: 24,
               fontSize: 18,
               stepSize: 5
             }
@@ -76,4 +81,7 @@
     }
   });
 </script>
+{% else %}
+<h2>ログインをしましょう</h2>
+<a href="{% url 'register:login' %}"> ログインはこちらから</a>{% endif %} 
 {% endblock %}

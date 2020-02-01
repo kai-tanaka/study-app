@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
-    'graphData.apps.GraphdataConfig'
+    'graphData.apps.GraphdataConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

@@ -4,6 +4,7 @@ from . import views
 app_name = 'graphData'
 
 urlpatterns = [
+    path('', views.top, name='top'),
     path('index', views.index, name='index'),
     path('<int:id>/delete/', views.delete, name='delete'),
     path('graphData/<str:category>/',

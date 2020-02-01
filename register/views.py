@@ -23,7 +23,7 @@ User = get_user_model()
 
 
 class Top(generic.TemplateView):
-    template_name = 'register/top.html'
+    template_name = 'viapage.html'
 
 
 class Login(LoginView):
@@ -32,7 +32,7 @@ class Login(LoginView):
 
 
 class Logout(LoginRequiredMixin, LogoutView):
-    template_name = 'register/top.html'
+    template_name = 'top.html'
 
 
 class UserCreate(generic.CreateView):

@@ -2,7 +2,7 @@
 <h2>カテゴリー</h2>
 <ul>
   <a href="{% url 'graphData:index' %}">
-    <li>トップ</li>
+    <li>全部</li>
   </a>
 
   {% for category in category_list %}
@@ -15,7 +15,8 @@
 <h2>学習データ</h2>
 {% if category %}
 <h2>カテゴリー: {{ category.title }}</h2>
-{% endif %} {% for graphDatas in graphData %}
+{% endif %}
+{% for graphDatas in graphData %}
 <ul>
   <li>
     <h4>{{ graphDatas.title }}</h4>

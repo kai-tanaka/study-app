@@ -4,9 +4,17 @@ from .forms import CategoryForm, GraphDataForm
 from django.contrib.auth.decorators import login_required
 
 
+def top(request):
+    datas = GraphData.objects.all().order_by('studyDay')
+    params = {
+        'datas': datas
+    }
+    return render(request, 'top.html', params)
+
+
 @login_required
 def index(request):
-    graphData = GraphData.objects.order_by('title')
+    graphData = GraphData.objects.order_by('studyDay')
     return render(request, 'graphData/index.html', {'graphData': graphData})
 
 
@@ -21,7 +29,8 @@ def delete(request, id):
 def graphData_category(request, category):
     category = Category.objects.get(title=category)
     graphData = GraphData.objects.filter(category=category).order_by('title')
-    return render(request, 'graphData/index.html', {'graphData': graphData, 'category': category})
+    params = {'graphData': graphData, 'category': category}
+    return render(request, 'graphData/index.html', params)
 
 
 @login_required
@@ -41,6 +50,8 @@ def new_graphData(request):
     if request.method == 'POST':
         form = GraphDataForm(request.POST)
         if form.is_valid():
+            graphData = form.save(commit=False)
+            graphData.user = request.user
             form.save()
             return redirect('graphData:index')
     else:
