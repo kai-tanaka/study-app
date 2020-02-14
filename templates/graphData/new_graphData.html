@@ -6,6 +6,7 @@
   {{ form.studyDay }}<br />学習日<br />
   {{ form.details }}<br />勉強の詳細<br />
   {{ form.studyTime }}時間<br />学習時間<br />
+  {{ form.studyTime.errors }}
   <button>保存</button>
 </form>
 <a href="{% url 'graphData:index' %}">戻る</a>

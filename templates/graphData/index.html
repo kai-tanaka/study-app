@@ -17,6 +17,7 @@
 <h2>カテゴリー: {{ category.title }}</h2>
 {% endif %}
 {% for graphDatas in graphData %}
+{% if request.user.id == graphDatas.user.id %}
 <ul>
   <li>
     <h4>{{ graphDatas.title }}</h4>
@@ -29,6 +30,7 @@
     <button type="submit">削除</button>
   </form>
 </ul>
+{% endif %}
 {% endfor %}
 <a href="{% url 'graphData:new_graphData' %}">学習データを追加する</a>
 {% endblock %}
