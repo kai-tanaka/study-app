@@ -10,6 +10,11 @@ class CategoryForm(ModelForm):
 
 
 class GraphDataForm(ModelForm):
+
+    def __init__(self, *args, **kwd):
+        super(GraphDataForm, self).__init__(*args, **kwd)
+        self.fields["details"].required = False
+
     class Meta:
         model = GraphData
         fields = ['title', 'studyDay', 'category', 'details', 'studyTime']

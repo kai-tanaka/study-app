@@ -2,20 +2,28 @@
 {% if request.user.is_authenticated %}
 
 <canvas id="canvas"></canvas>
-
 <script>
   var ctx = document.getElementById("canvas").getContext("2d");
   var myBar = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: [{% for data in datas %}
+      labels: [
+        {% for data in datas %}
+        {% if request.user.id == data.user.id %}
         "{{ data.studyDay }}",
-        {% endfor %}], //ラベルをDjangoのTODO登録から設定したい日にちにする予定
+        {% endif %}
+        {% endfor %}
+      ], //ラベルをDjangoのTODO登録から設定したい日にちにする予定
       datasets: [
         {
-          data: [{% for data in datas %}
-            {{ data.studyTime }},
-            {% endfor %}] //数字をDjangoのTODO登録から設定したい学習時間にする予定
+          data: [
+          {% for data in datas %}
+          {% if request.user.id == data.user.id %}
+          {{ data.studyTime }},
+          {% endif %}
+          {% endfor %}
+          ]            
+          //数字をDjangoのTODO登録から設定したい学習時間にする予定
           // backgroundColor: [
           //   //DjangoのTODO登録から設定したいグラフの色を変更する
           //   "#FF4444",
@@ -41,6 +49,7 @@
         yAxes: [
           {
             display: true,
+            stacked: true,
             scaleLabel: {
               display: true,
               labelString: "学習時間",
@@ -57,6 +66,7 @@
         xAxes: [
           {
             display: true,
+            stacked: true,
             barPercentage: 0.4,
             categoryPercentage: 0.4,
             scaleLabel: {
