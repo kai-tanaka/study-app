@@ -30,7 +30,3 @@ $ pip install -r requirements.txt
 ## :book:  Description
 
 ログイン機能、サインアップ機能を搭載し、TODOリストとしての面を持ちつつ、かつTODOを行った時間をグラフにして表示させる機能があるサイトです。
-
-## :boy:  Author
-
-- [twitter](https://twitter.com/posse0427)
